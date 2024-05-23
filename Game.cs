@@ -6,7 +6,7 @@ namespace OOV_Prov
 {
     public class Game
     {
-        public static void Meny() //start för spelet
+        public void Meny() //start meny för spelet
         {
             Console.WriteLine("Play:P");
             Console.WriteLine("Quit:Q");
@@ -35,35 +35,92 @@ namespace OOV_Prov
 
 
     }
-    public static void Play()
+    public void Play() 
     {
         Player player=new Player();
+
         Knight knight=new Knight();
         Archer archer=new Archer();
 
-        bool PlayerWon;
+          List<Entity> enemies=new List<Entity>(); //lista för fiender 
+        enemies.Add(knight);
+        enemies.Add(archer);
 
         Random rnd= new Random();
 
-        while(true) //En loop tills matchen är slut
+        while(true) //En loop tills spelet är slut
         {
-            int turn= rnd.Next(1,7);
+            int turn= rnd.Next(1,4);
 
-            if(turn==1 ||turn==2||turn==3||turn==4)
+            if(turn==1) //player tur
             {
                 player.Attack();
                 if(knight.Hp<archer.Hp)
                 {
+                    archer.TakeDamange(player.Dmg);
+
+                }
+                else
+                {
+                    knight.TakeDamange(player.Dmg);
+                }
+
+
+            }
+                else if(turn == 2 && archer.Hp>0) //archer tur
+                {
+                    archer.Attack();
+                    player.TakeDamange(archer.Dmg);
 
                 }
 
-            }
+                else if(turn == 3 && knight.Hp>0) // knight tur
+                {
+                    knight.Attack();
+                    player.TakeDamange(knight.Dmg);
+                }
 
+                if(player.Hp <= 0) //detta för visa ifall jag förlura
+                {
+                    break;
+                }
+                else if (knight.Hp<=0 && archer.Hp<=0) //detta för visa att jag vann
+                {
+                    break;
 
+                }
+            Thread.Sleep(550);
+
+            
+
+                
 
         }
+        
+        StreamWriter sw= new StreamWriter("Textfil.txt", true); //skapa filen 
+
+
+        sw.WriteLine(player.Hp); //spara hp
+
+        sw.Close();
+        
+                 if(player.Hp<=0) //om förlura det blir detta
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("du förlorade");
+
+                }
+                else //om vinner blir detta
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("du vann");
+
+                }
+
+            Meny();
 
     }
+    
        
 }
 }

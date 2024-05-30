@@ -8,28 +8,31 @@ namespace OOV_Prov
     {
         public void Meny() //start meny för spelet
         {
-        Console.WriteLine("Play:P");
-        Console.WriteLine("Quit:Q");
+
+            Console.WriteLine("Play:P");
+            Console.WriteLine("Quit:Q");
         
-        var input=Console.ReadKey();
-        Console.Clear();
+            var input=Console.ReadKey();
+            Console.Clear();
 
-        switch (input.Key)
-        {
-            case ConsoleKey.P: 
-                Play();
-                break;
+            switch (input.Key)
+            {
 
-            case ConsoleKey.Q:
-                break;
+                case ConsoleKey.P: 
+                    Play();
+                    break;
 
-            default:
-                Console.WriteLine("write single key");
-                Meny();
-                break;
+                case ConsoleKey.Q:
+                    break;
+
+                default:
+                    Console.WriteLine("write single key");
+                    Meny();
+                    break;
+                
+            }
+
         }
-
-    }
         public void Play() 
         {
             Player player=new Player();
@@ -59,26 +62,26 @@ namespace OOV_Prov
                     }
 
                 }
-                    else if(turn == 2 && archer.Hp > 0) //archer tur
-                    {
-                        archer.Attack();
-                        player.TakeDamange(archer.Dmg);
-                    }
+                else if(turn == 2 && archer.Hp > 0) //archer tur
+                {
+                    archer.Attack();
+                    player.TakeDamange(archer.Dmg);
+                }
 
-                    else if(turn == 3 && knight.Hp > 0) // knight tur
-                    {
-                        knight.Attack();
-                        player.TakeDamange(knight.Dmg);
-                    }
+                else if(turn == 3 && knight.Hp > 0) // knight tur
+                {
+                    knight.Attack();
+                    player.TakeDamange(knight.Dmg);
+                }
 
-                    if(player.Hp <= 0) //detta för visa ifall jag förlura
-                    {
-                        break;
-                    }
-                    else if (knight.Hp <= 0 && archer.Hp <= 0) //detta för visa att jag vann
-                    {
-                        break;
-                    }
+                if(player.Hp <= 0) //detta för visa ifall jag förlura
+                {
+                    break;
+                }
+                else if (knight.Hp <= 0 && archer.Hp <= 0) //detta för visa att jag vann
+                {
+                    break;
+                }
                 Thread.Sleep(550);
             }
             
@@ -88,13 +91,17 @@ namespace OOV_Prov
             
             if(player.Hp <= 0) //om förlura det blir detta
             {
-            Console.WriteLine("");
-            Console.WriteLine("du förlorade");
+
+                Console.WriteLine("");
+                Console.WriteLine("du förlorade");
+
             }
             else //om vinner blir detta
             {
-            Console.WriteLine("");
-            Console.WriteLine("du vann");
+
+                Console.WriteLine("");
+                Console.WriteLine("du vann");
+
             }
             Meny();
         }  
